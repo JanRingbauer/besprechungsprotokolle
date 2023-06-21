@@ -1,0 +1,53 @@
+<mvc:View controllerName="at.clouddna.besprechungsprotokolle.controller.Main"
+    xmlns:mvc="sap.ui.core.mvc" displayBlock="true"
+    xmlns="sap.m"
+    xmlns:t="sap.ui.table"
+    xmlns:core="sap.ui.core"
+    xmlns:f="sap.ui.layout.form"
+    xmlns:l="sap.ui.layout" xmlns:u="sap.ui.unified">
+    <Page id="page" title="{i18n>title}" showHeader="false" enableScrolling="false">
+        <content>
+                <t:TreeTable
+                    id="treeTable"
+                    selectionMode="None"
+                    editable="true"
+                    enableColumnReordering="false"
+                    rows="{path:'/CatProtTree' ,paramaters: {numberOfExpandedLevels: 2}}">
+                <t:extension>
+                    <OverflowToolbar style="Clear">
+                        <Title text="Ihre Protokolle"/>
+                        <ToolbarSpacer/>
+                        <SearchField width="20%" search="onSearch"/>
+                        <Button text="neues Verzeichnis hinzufügen" type="Ghost" press="onNeuesVerzeichnisPressed"/>
+                    </OverflowToolbar>
+                </t:extension>
+                <t:columns>
+                    <t:Column width="100%">
+                        <Label text="Kunde"/>
+                        <t:template>
+                            <HBox width="100%">
+                                <HBox width="50%">
+                                    <Text text="{name}" wrapping="false" />
+                                </HBox>
+                                <HBox width="50%" justifyContent="End">
+                                    <Button icon="sap-icon://detail-view" type="Transparent" press="onListItemPressed" visible="{isNoteItem}"/>
+                                    <Button icon="sap-icon://delete" type="Reject" press="onDeletePressed"/>
+                                    <MenuButton icon="sap-icon://add" visible="{= !${isNoteItem}}">
+                                        <menu>
+                                           <Menu >
+                                                <MenuItem text="Neues Verzeichnis" press="onNewPressed"/>
+                                                <MenuItem text="Neues Protokoll" press="onNewProtokollPressed"/>
+                                                <!-- <MenuItem text="Neues Verzeichnis" press="onNewPressed($event, 'verzeichnis')"/>
+                                                <MenuItem text="Neues Protokoll" press="onNewProtokollPressed($event, 'protokoll')"/> -->
+                                           </Menu>
+                                        </menu>
+                                    </MenuButton>
+                                </HBox>
+                            </HBox>
+                        </t:template>
+                    </t:Column>
+            </t:columns>
+        </t:TreeTable>
+        </content>
+    </Page>
+</mvc:View>

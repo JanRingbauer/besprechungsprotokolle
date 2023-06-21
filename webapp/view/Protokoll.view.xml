@@ -1,0 +1,228 @@
+<mvc:View xmlns:mvc="sap.ui.core.mvc"
+	xmlns:u="sap.uxap"
+	xmlns:layout="sap.ui.layout"
+	xmlns="sap.m"
+    xmlns:core="sap.ui.core"
+	controllerName="at.clouddna.besprechungsprotokolle.controller.Protokoll"
+	height="100%">
+	<u:ObjectPageLayout id="ObjectPageLayout"
+		showTitleInHeaderContent="true"
+		showEditHeaderButton="true"
+		editHeaderButtonPress="handleEditBtnPress"
+		upperCaseAnchorBar="false">
+		<u:headerTitle>
+			<u:ObjectPageDynamicHeaderTitle>
+				<u:expandedHeading>
+					<HBox>
+						<Title text="Protokoll" wrapping="true"/>
+					</HBox>
+				</u:expandedHeading>
+
+			</u:ObjectPageDynamicHeaderTitle>
+		</u:headerTitle>
+
+		<u:headerContent>
+            <HBox width="100%">
+                <HBox width="100%">
+                <HBox width="33%">
+                        <VBox width="100%" class="sapUiSmallMarginEnd">
+                            <VBox class="sapUiMediumMarginBottom">
+                                <Label text="Verzeichnis"/>
+                                <Text text="{node/name}"/>
+                            </VBox>
+                            <VBox >
+                                <Label text="Protokoll"/>
+                                <Text text="{name}"/>
+                            </VBox>
+                        </VBox>
+                    </HBox>
+
+                    <HBox width="33%">
+                        <VBox width="100%" class="sapUiSmallMarginEnd">
+                            <VBox class="sapUiSmallMarginBottom">
+                                <Label text="Kunde"/>
+                                <Text text="{kunde}"/>
+                            </VBox>
+                            <VBox class="sapUiSmallMarginBottom">
+                                <Label text="Datum"/>
+                                <Text text="{date}"/>
+                            </VBox>
+                            <VBox>
+                                <Label text="Uhrzeit"/>
+                                <Text text="{time}"/>
+                            </VBox>
+                        </VBox>
+                    </HBox>
+
+                    <HBox width="33%">
+                        <VBox width="100%" class="sapUiSmallMarginEnd">
+                            <VBox class="sapUiMediumMarginBottom">
+                                <Label text="Teilnehmer/innen"/>
+                                <Text text="{teilnehmer}"/>
+                            </VBox>
+                            <VBox >
+                                <Label text="Protokollführer/in"/>
+                                <Text text="{protokollfuehrer}"/>
+                            </VBox>
+                        </VBox>
+                    </HBox>
+                    </HBox>
+            </HBox>
+		</u:headerContent>
+
+		<u:sections>
+        <u:ObjectPageSection titleUppercase="false" id="allgemeines" title="Allgemeines">
+				<u:subSections>
+					<u:ObjectPageSubSection >
+						<u:blocks>
+                            <VBox class="sapUiSmallMargin">
+                                <items>
+                                <VBox>
+                                    <HBox class="sapUiTinyMarginBottom">
+                                        <VBox width="51%" class="sapUiSmallMarginEnd">
+                                            <Label text="Kunde"/>
+                                            <Input placeholder="Kunde" value="{kunde}"/>
+                                        </VBox>
+                                        <VBox  width="30%" class="sapUiSmallMarginEnd">
+                                            <Label text="Datum"/>
+                                            <DatePicker placeholder="Datum" value="{date}"/>
+                                        </VBox>
+                                        <VBox  width="20%">
+                                            <Label text="Uhrzeit"/>
+                                            <TimePicker placeholder="Uhrzeit" value="{uhrzeit}"/>
+                                        </VBox>
+                                    </HBox>
+                                    <HBox class="sapUiTinyMarginTop">
+                                        <VBox width="50%" class="sapUiSmallMarginEnd">
+                                            <Label text="Teilnehmer/innen"/>
+                                            <Input placeholder="Teilnehmer/innen" value="{teilnehmer}"/>
+                                        </VBox>
+                                        <VBox width="50%">
+                                            <Label text="Protokollführer/in"/>
+                                            <Input placeholder="Protokollführer/in" value="{protokollfuehrer}"/>
+                                        </VBox>
+                                    </HBox>
+                                    </VBox>
+                                </items>
+                            </VBox>
+						</u:blocks>
+					</u:ObjectPageSubSection>
+				</u:subSections>
+			</u:ObjectPageSection>
+
+			<u:ObjectPageSection titleUppercase="false" id="zusatzinformationen" title="Zusatzinformationen">
+				<u:subSections>
+					<u:ObjectPageSubSection id="zusatzinfos">
+						<u:blocks>
+							<VBox alignItems="Center">
+                                <VBox width="100%" id="id1VBox" items="{fields}">
+                                    <items>
+                                        <HBox>
+                                            <HBox width="100%" height="32px" justifyContent="End" alignItems="Center">
+                                                <Label text="{label}:" vAlign="Middle" class="sapUiMediumMargin"/>
+                                            </HBox>
+                                            <HBox width="100%" height="32px" alignItems="Center">
+                                            <Input width="90%" placeholder="" value="{value}"/>
+                                            <Button width="10%" icon="sap-icon://delete" type="Reject" press="onDeleteTitlePressed" class="sapUiSmallMargin"/>
+                                        </HBox>
+                                    </HBox>
+                                </items>
+                            </VBox>
+                            <Button text="Feld hinzufügen" icon="sap-icon://add" class="sapUiSmallMargin" press="onNewButtonPressed" />
+                            </VBox>
+						</u:blocks>
+					</u:ObjectPageSubSection>
+				</u:subSections>
+			</u:ObjectPageSection>
+
+			<u:ObjectPageSection titleUppercase="false" id="tagesthemen" title="Tagesthemen">
+					<u:subSections>
+					<u:ObjectPageSubSection>
+						<u:blocks>
+							<VBox alignItems="Center">
+                                <VBox id="idVBox" items="{tagesthemen}">
+                                    <items>
+                                        <HBox width="100%" alignItems="Center" class="sapUiSmallMarginTopBottom">
+                                            <VBox class="sapUiTinyMargin" width="95%">
+                                                <Input width="100%" placeholder="Thema" class="sapUiTinyMarginBottom" value="{title}" />
+                                                <TextArea width="100%" cols="100" rows="7" placeholder="Wichtiges zum Thema" value="{inhalt}" />
+                                            </VBox>
+                                            <VBox class="sapUiTinyMargin" width="5%">
+                                                <Button icon="sap-icon://slim-arrow-up" type="Transparent" press="onTopPressed"/>
+                                                <Button icon="sap-icon://delete" type="Reject" class="sapUiSmallMarginTopBottom" press="onDeletePressed"/>
+                                                <Button icon="sap-icon://slim-arrow-down" type="Transparent" press="onBottomPressed"/>
+                                            </VBox>
+                                        </HBox>
+                                    </items>
+                                </VBox>
+                                <Button icon="sap-icon://add" press="onButtonPressed" width="50%"/>
+                            </VBox>
+						</u:blocks>
+					</u:ObjectPageSubSection>
+				</u:subSections>
+			</u:ObjectPageSection>
+
+			<u:ObjectPageSection titleUppercase="false" id="zusammenfassung" title="Zusammenfassung">
+				<u:subSections>
+					<u:ObjectPageSubSection>
+						<u:blocks>
+                            <HBox justifyContent="Center">
+                                <TextArea rows="7" cols="100" placeholder="Zusammenfassung" value="{zusammenfassung}"/>
+                            </HBox>
+						</u:blocks>
+					</u:ObjectPageSubSection>
+				</u:subSections>
+			</u:ObjectPageSection>
+
+            <u:ObjectPageSection titleUppercase="false" id="toDo" title="To Do">
+				<u:subSections>
+					<u:ObjectPageSubSection>
+						<u:blocks>
+                            <VBox alignItems="Center">
+                                <VBox width="100%" items="{todo}">
+                                    <items>
+                                        <HBox id="hbox" width="100%" alignItems="Center">
+                                            <HBox width="15%" alignItems="Center" justifyContent="Center">
+                                            <CheckBox id="checkbox" selected="{erledigt}" select="onCheckboxClicked"/>
+                                            </HBox>
+                                            <VBox width="70%">
+                                            <Input width="100%" value="{aufgabe}"/>
+                                            </VBox>
+                                            <HBox width="15%" alignItems="Center" justifyContent="Center">
+                                            <Button icon="sap-icon://delete" type="Reject" class="sapUiSmallMarginTopBottom" press="onToDoDeletePressed"/>
+                                            </HBox>
+                                        </HBox>
+                                    </items>
+                                </VBox>
+                                <Button icon="sap-icon://add" press="onToDoButtonPressed"/>
+                             </VBox>
+						</u:blocks>
+					</u:ObjectPageSubSection>
+				</u:subSections>
+			</u:ObjectPageSection>
+
+            <u:ObjectPageSection titleUppercase="false" id="footer">
+				<u:subSections>
+					<u:ObjectPageSubSection>
+						<u:blocks>
+                            <HBox width="100%">
+                                <HBox width="80%">
+                                    <HBox justifyContent="Center" alignItems="Center">
+                                        <Text text="Tags eingeben:" width="100%" textAlign="Center" class="sapUiSmallMarginEnd"/>
+                                    </HBox>
+                                    <HBox>
+                                        <MultiInput id="multiInput" width="95%" showValueHelp="false" value="{protocol2tag}"/>
+                                    </HBox>
+                                </HBox>
+                                <HBox width="20%" justifyContent="End">
+                                    <Button id="btnSave" text="Speichern" type="Accept" icon="sap-icon://save" press="onSavePressed" visible="{editModel>/editmode}" width="100%"/>
+                                </HBox>
+                            </HBox>
+						</u:blocks>
+					</u:ObjectPageSubSection>
+				</u:subSections>
+			</u:ObjectPageSection>
+
+		</u:sections>
+	</u:ObjectPageLayout>
+</mvc:View>
