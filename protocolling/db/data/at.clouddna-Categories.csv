@@ -1,0 +1,4 @@
+nodeID,name,hierarchyLevel,isNoteItem,deleted,parentNode_nodeID,drillState
+3bd482f4-df4f-11ed-b5ea-0242ac120002,Category I,0,false,false,null,expanded
+3bd482f4-df4f-11ed-b5ea-0242ac120003,Category II,0,false,false,null,expanded
+3bd482f4-df4f-11ed-b5ea-0242ac120004,Category I.I,1,false,false,3bd482f4-df4f-11ed-b5ea-0242ac120002,collapsed

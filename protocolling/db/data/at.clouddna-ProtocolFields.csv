@@ -1,0 +1,3 @@
+ID, protocol_ID, label, dataType, controlType, value
+0bc6bc12-e35a-11ed-b5ea-0242ac120002, 3bd482f4-df4f-11ed-b5ea-0242ac120011, Hallo, String, Ja, Auf Wiedersehen
+126f8ac6-e35a-11ed-b5ea-0242ac120002, 3bd482f4-df4f-11ed-b5ea-0242ac120011, Hofer, String, Nein, Milch
