@@ -89,7 +89,7 @@
                                         </VBox>
                                         <VBox  width="20%">
                                             <Label text="Uhrzeit"/>
-                                            <TimePicker placeholder="Uhrzeit" value="{uhrzeit}"/>
+                                            <TimePicker placeholder="Uhrzeit" value="{time}"/>
                                         </VBox>
                                     </HBox>
                                     <HBox class="sapUiTinyMarginTop">
@@ -123,7 +123,7 @@
                                             </HBox>
                                             <HBox width="100%" height="32px" alignItems="Center">
                                             <Input width="90%" placeholder="" value="{value}"/>
-                                            <Button width="10%" icon="sap-icon://delete" type="Reject" press="onDeleteTitlePressed" class="sapUiSmallMargin"/>
+                                            <Button width="10%" icon="sap-icon://delete" type="Reject" press="onDeletePressed" class="sapUiSmallMargin"/>
                                         </HBox>
                                     </HBox>
                                 </items>
@@ -140,7 +140,7 @@
 					<u:ObjectPageSubSection>
 						<u:blocks>
 							<VBox alignItems="Center">
-                                <VBox id="idVBox" items="{tagesthemen}">
+                                <VBox id="idVBox" items="{path:'tagesthemen', sorter:{path:'index'}}">
                                     <items>
                                         <HBox width="100%" alignItems="Center" class="sapUiSmallMarginTopBottom">
                                             <VBox class="sapUiTinyMargin" width="95%">
@@ -189,7 +189,7 @@
                                             <Input width="100%" value="{aufgabe}"/>
                                             </VBox>
                                             <HBox width="15%" alignItems="Center" justifyContent="Center">
-                                            <Button icon="sap-icon://delete" type="Reject" class="sapUiSmallMarginTopBottom" press="onToDoDeletePressed"/>
+                                            <Button icon="sap-icon://delete" type="Reject" class="sapUiSmallMarginTopBottom" press="onDeletePressed"/>
                                             </HBox>
                                         </HBox>
                                     </items>
@@ -211,7 +211,11 @@
                                         <Text text="Tags eingeben:" width="100%" textAlign="Center" class="sapUiSmallMarginEnd"/>
                                     </HBox>
                                     <HBox>
-                                        <MultiInput id="multiInput" width="95%" showValueHelp="false" value="{protocol2tag}"/>
+                                        <MultiInput id="multiInput" submit="onTokenSubmit" width="95%" showValueHelp="false" tokens="{path:'protocol2tag', parameters:{expand:'tag'}}">
+                                            <tokens>
+                                                <Token key="{tag/ID}" text="{tag/name}"/>
+                                            </tokens>
+                                        </MultiInput>
                                     </HBox>
                                 </HBox>
                                 <HBox width="20%" justifyContent="End">

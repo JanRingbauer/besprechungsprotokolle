@@ -33,7 +33,6 @@ sap.ui.define(
         },
 
         onSearch: function (oEvent) {
-          debugger;
           let aFilters = [];
           let sQuery = oEvent.getSource().getValue();
           if (sQuery && sQuery.length > 0) {
@@ -72,6 +71,7 @@ sap.ui.define(
                             .getProperty("/name"),
                           hierarchyLevel: 0,
                           isNoteItem: false,
+                          drillState: "expanded",
                         },
                         {
                           success: () => {
@@ -83,6 +83,7 @@ sap.ui.define(
                         }
                       );
                     this.oCreateVerzeichnisDialog.close();
+                    this.getView().getModel("labelModel>name").delete();
                   }.bind(this),
                 }),
                 new sap.m.Button({
@@ -126,6 +127,8 @@ sap.ui.define(
                   name: sName,
                   parentNode_nodeID: sPath,
                   hierarchyLevel: 1,
+                  isNoteItem: false,
+                  drillState: "expanded",
                 },
                 {
                   success: (oData, response) => {
@@ -178,20 +181,13 @@ sap.ui.define(
         },
 
         onDeletePressed: function (oEvent) {
-          // let Node = oEvent.getSource().getBindingContext().getObject();
-          // let sPath = `/${Node.isNoteItem ? "Protocols" : "Categories"}(guid'${
-          //   Node.nodeID
-          // }')`;
-          // this.getView().getModel().remove(sPath);
-          // this.getView().byId("treeTable").getBinding("rows").refresh(true);
+          let Node = oEvent.getSource().getBindingContext().getObject();
           MessageBox.warning("Wollen Sie den Eintrag wirklich löschen?", {
             title: "Löschen",
             actions: [MessageBox.Action.YES, MessageBox.Action.NO],
             emphasizedAction: MessageBox.Action.YES,
             onClose: function (oAction) {
               if (MessageBox.Action.YES === oAction) {
-                debugger;
-                let Node = oEvent.getSource().getBindingContext().getObject();
                 let sPath = `/${
                   Node.isNoteItem ? "Protocols" : "Categories"
                 }(guid'${Node.nodeID}')`;
@@ -203,7 +199,6 @@ sap.ui.define(
               }
             }.bind(this),
           });
-          debugger;
         },
 
         openNamingDialog: function (fnOnOkPressed, title) {
@@ -241,6 +236,9 @@ sap.ui.define(
                 press: (oEvent) => {
                   fnOnOkPressed(oEvent);
                   this._oNamingDialog.close();
+                  this.getView()
+                    .getModel("testdatenModel>/newProtokollName")
+                    .delete();
                 },
               })
             );

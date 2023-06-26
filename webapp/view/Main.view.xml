@@ -12,7 +12,7 @@
                     selectionMode="None"
                     editable="true"
                     enableColumnReordering="false"
-                    rows="{path:'/CatProtTree' ,paramaters: {numberOfExpandedLevels: 2}}">
+                    rows="{path:'/CatProtTree' ,parameters: {numberOfExpandedLevels: 2, operationMode: 'Server'}}">
                 <t:extension>
                     <OverflowToolbar style="Clear">
                         <Title text="Ihre Protokolle"/>

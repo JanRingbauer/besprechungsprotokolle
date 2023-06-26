@@ -14,60 +14,10 @@ sap.ui.define(
       "at.clouddna.besprechungsprotokolle.controller.Protokoll",
       {
         onInit: function () {
-          let oRouter = this.getOwnerComponent().getRouter();
+          let oRouter = this.getRouter();
           oRouter
             .getRoute("Protokoll")
             .attachPatternMatched(this._onPatternMatched, this);
-
-          let oAllgemeinModel = new sap.ui.model.json.JSONModel([]);
-          this.getView().setModel(oAllgemeinModel, "allgemeinModel");
-
-          let oToDo = [
-            {
-              input: "Object Page einbauen",
-              modelText: "",
-            },
-          ];
-          let oToDoModel = new sap.ui.model.json.JSONModel([]);
-          this.getView().setModel(oToDoModel, "todoModel");
-
-          let oModel = new sap.ui.model.json.JSONModel([]);
-          this.getView().setModel(oModel, "staticModel");
-
-          let oMultiInput = this.getView().byId("multiInput");
-          oMultiInput.setTokens([
-            new Token({ text: "ABAP", key: "0001" }),
-            new Token({ text: "JavaScript", key: "0002" }),
-            new Token({ text: "Java", key: "0003" }),
-            new Token({ text: "Hofer", key: "0004" }),
-            new Token({ text: "Billa", key: "0005" }),
-            new Token({ text: "Spar", key: "0006" }),
-          ]);
-
-          let fnValidator = function (args) {
-            var text = args.text;
-
-            return new Token({ key: text, text: text });
-          };
-          oMultiInput.addValidator(fnValidator);
-
-          let oMultiInputModel = new sap.ui.model.json.JSONModel();
-          this.getView().setModel(oMultiInputModel, "inputModel");
-
-          let aProtokollDaten = {
-            daten: [
-              {
-                label: "Anzahl an Personen",
-                value: "4",
-              },
-              {
-                label: "Hauptthema",
-                value: "Frontend",
-              },
-            ],
-          };
-          let oDatenModel = new sap.ui.model.json.JSONModel(aProtokollDaten);
-          this.getView().setModel(oDatenModel, "protokollModel");
         },
 
         _onPatternMatched: function (oEvent) {
@@ -76,6 +26,24 @@ sap.ui.define(
             path: `/Protocols(${this.protocolID})`,
             parameters: { expand: "node,fields,todo" },
           });
+        },
+
+        onTokenSubmit: function (oEvent, aTags) {
+          let name = oEvent.getParameters().value;
+          let sPath = oEvent.getSource().getBindingContext().getPath();
+
+          this.getModel().read("/Tags", {
+            success: (oData, response) => {
+              debugger;
+            },
+            filter: new sap.ui.model.Filter({
+              path: "name",
+              operator: "EQ",
+              value1: name,
+            }),
+          });
+
+          debugger;
         },
 
         onNewButtonPressed: function (oEvent) {
@@ -131,9 +99,18 @@ sap.ui.define(
           this.oCreateTitleDialog.open();
         },
 
-        onDeleteTitlePressed: function (oEvent) {
+        onDeletePressed: function (oEvent) {
           let sPath = oEvent.getSource().getBindingContext().getPath();
-          this.getView().getModel().remove(sPath);
+          MessageBox.warning("Wollen Sie den Eintrag wirklich löschen?", {
+            title: "Löschen",
+            actions: [MessageBox.Action.YES, MessageBox.Action.NO],
+            emphasizedAction: MessageBox.Action.YES,
+            onClose: function (oAction) {
+              if (MessageBox.Action.YES === oAction) {
+                this.getView().getModel().remove(sPath);
+              }
+            }.bind(this),
+          });
         },
 
         onButtonPressed: function () {
@@ -162,18 +139,8 @@ sap.ui.define(
             });
         },
 
-        onToDoDeletePressed: function (oEvent) {
-          let sPath = oEvent.getSource().getBindingContext().getPath();
-          this.getView().getModel().remove(sPath);
-        },
-
         onCheckboxClicked: function () {
           this.getView().getModel().submitChanges();
-        },
-
-        onDeletePressed: function (oEvent) {
-          let sPath = oEvent.getSource().getBindingContext().getPath();
-          this.getView().getModel().remove(sPath);
         },
 
         onTopPressed: function (oEvent) {
